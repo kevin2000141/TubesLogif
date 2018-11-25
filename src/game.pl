@@ -320,8 +320,8 @@ help :-     write('\nquit. -- Keluar dari permainan\n'),
             write('use(Object). -- Menggunakan sebuah object\n'),
             write('attack. -- Menyerang musuh yang terdapat di petak yang sama\n'),
             write('status. -- Menampilkan status permainan\n'),
-            write('save(Filename). -- Save permainan\n'),
-            write('load(Filename). -- Load permainan sebelumnya\n').
+            write('savegame(\'FileName.pl\'). -- Save permainan di FileName.pl\n'),
+            write('loadgame(\'FileName.pl\'). -- Load permainan sebelumnya di FileName.pl\n').
 
 %Ketika quit maka status permainan menjadi off, sehingga tidak dapat menjalankan beberapa command penting
 quit :- update_status_permainan, status_permainan(Status),
@@ -329,7 +329,7 @@ quit :- update_status_permainan, status_permainan(Status),
             retract(status_permainan(_)),
             asserta(status_permainan(off))
         ; !,
-            write("Anda sudah keluar dari permainan")
+            write('Anda sudah keluar dari permainan')
         ).
 
 %Menampilkan status pemain
@@ -884,7 +884,7 @@ take(X) :- update_status_permainan, status_permainan(Status),
                 ),update_enemy_position(10),
                 retract(count_move(Movement)), New_Movement is Movement + 1, asserta(count_move(New_Movement))
             ; !,
-                write('Anda sudah kalah atau keluar dari permainan\n'),
+                write(''),
                 fail
             ),!.
 
@@ -1098,7 +1098,7 @@ attack :- update_status_permainan, status_permainan(Status),
                             retract(count_enemy(Total_Enemy)),
                             New_Total_Enemy is Total_Enemy - 1,
                             (New_Total_Enemy = 0 ->
-                                    write('SELAMAT ANDA TELAH MENANG')
+                                    write('')
                             ;
                                 write('')
                             ),
@@ -1118,5 +1118,5 @@ attack :- update_status_permainan, status_permainan(Status),
                     write('Tidak ada musuh di petak Anda sekarang')
                 )
         ; !,
-            write('Anda telah keluar dari permainan\n Perintah gagal dieksekusi')
+            write('')
         ),!.
